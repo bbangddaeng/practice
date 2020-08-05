@@ -2,11 +2,15 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <script src = "http://beneposto.pl/jqueryrotate/js/jQueryRotateCompressed.js"></script>
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <!-- <script src= "http://code.jquery.com/jquery-1.11.1.min.js"></script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script> -->
+    <!-- <script src= "//code.jquery.com/jquery-migrate-1.2.1.min.js"></script> -->
     <script src="http://jqueryrotate.com/jQueryRotateCompressed.js"></script>
-    <script>var ang=0;</script>
+    <script type="text/javascript" src="http://www.gstatic.com/charts/loader.js"></script>
+
+    <script>var ang=0; </script>
     <style>
 
       div {position:relative;}
@@ -29,7 +33,6 @@
     </style>
 
     <script>var tempAng;</script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
      <script type="text/javascript">
 
@@ -59,7 +62,7 @@
      </script>
   </head>
   <body>
-
+    <script>var click = true;</script>
 
     <div style="z-index:1;width:600px;height:10px;" class = "hc vc">
       <img id = "dir"style="z-index:20;width:50px;height:50px;left:276px;top:78px;"src = "https://t1.daumcdn.net/cfile/tistory/0360BE3D5083FDF621"></img>
@@ -68,18 +71,29 @@
     <div id="target" style="width:600px;height:600px;overflow:hidden;"class = "hc vc"></div>
 
     <div style="z-index:16;width:600px;height:600px;overflow:hidden;left:200px;" class = "hc vc">
-      <input class = "button" id = "btn" type ="button" value ="  돌려돌려 돌림판   " onclick="if(t.length <=2){alert('최소 2개이상 넣으세요.');return;}rot(tempAng)"></input>
+      <input class = "button" id = "btn" type ="button" value =" 돌려돌려 돌림판!   " onclick="if(t.length <=2){alert('최소 2개이상 넣으세요.');return;}
+      processing(); "></input>
 
       <br>
-      <input class = "button" type="button" value="빼기" onclick="cnt--;
-      if(t.length == 2){t[1][0] = '';drawChart();return;}t.pop();google.visualization.arrayToDataTable(t);drawChart();"></input>
-      <input class = "button" id = "btn" type ="button" value ="리셋" onclick="t.splice(2,10);t[1][0] = '';drawChart(); "></input>
+      <input class = "button" type="button" value="빼기" onclick="
+      if(chk()){
+        cnt--;
+        if(t.length == 2){
+          t[1][0] = ''; drawChart();return;}
+        t.pop();google.visualization.arrayToDataTable(t);
+        drawChart();
+      }"></input>
+
+      <input class = "button" type ="button" value ="리셋" onclick="
+      if(chk()){
+        t.splice(2,10);t[1][0] = '';
+        drawChart();
+        }"></input>
 
       <br><br>
-      <label> 추가 ☞ </label><input placeholder="입력하시오." type ="text" id ="inp"
-      style = "text-align:center;"value=""/>
+      <label> 추가 ☞ </label> <input placeholder="입력하시오." style="height:5%;"type ="text" id ="inp" style = "text-align:center;"value=""/>
       <br><br>
-      Made by <strong>박장군</strong>
+      <label>Made by <strong>박장군</strong></label>
     </div>
 
     <script>
@@ -92,7 +106,7 @@
       document.getElementById("inp").focus();
 
       $("#inp" ).keyup(function(e){
-        if(e.keyCode == 13){
+        if(e.keyCode == 13 && chk()){
           if($("#inp").val() == ''){
             alert("입력하세요.");
             return;
@@ -125,13 +139,12 @@
             google.visualization.arrayToDataTable(t);
             drawChart();
           }
-
         }
       });
 
     function random(){
       var res = Math.random();
-      return (res*100000000);
+      return (res*1000000000);
     }
 
     function rot(tempAng){
@@ -152,7 +165,30 @@
       var one_ang = 360/len;
       var temp = t[len - (parseInt(ang/one_ang))][0];
 
-      setTimeout(() => alert(temp + "당첨!!"),1500);
+      setTimeout("$('.button').css('cursor','pointer');",1500);
+      setTimeout("$('#inp').css('cursor','text');",1500);
+      setTimeout("$('#inp').attr('disabled', false)",1500);
+      setTimeout(() => alert(temp + " 당첨!!"),1500);
+      setTimeout(() => click = true,1500);
+    }
+
+    function processing(){
+      if(chk()){
+          click = false;
+          $(".button").css("cursor","no-drop");
+          $("#inp").css("cursor","no-drop");
+          $("#inp").attr("disabled",true);
+          rot(tempAng);
+      }
+    }
+
+    function chk(){
+      if(click){
+        return true;
+      }
+      else{
+        return false;
+      }
     }
     </script>
   </body>
